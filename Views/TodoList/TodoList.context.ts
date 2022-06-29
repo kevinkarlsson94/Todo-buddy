@@ -1,8 +1,8 @@
 import { createContext } from 'react'
-import { ITodo } from './App.types'
-import { ITodoAppState, TodoAction } from './State/State'
+import { ITodoAppState, TodoAction } from './TodoList.reducer'
+import { ITodo } from './TodoList.types'
 
-interface ITodoAppContext {
+interface ITodoListContext {
   todoAppState: ITodoAppState
   dispatch: React.Dispatch<TodoAction>
   editingItemGetterSetter: {
@@ -11,7 +11,7 @@ interface ITodoAppContext {
   }
 }
 
-export const TodoAppContext = createContext<ITodoAppContext>({
+export const TodoListContext = createContext<ITodoListContext>({
   todoAppState: { todos: [] },
   dispatch: () => null,
   editingItemGetterSetter: {

@@ -1,22 +1,43 @@
+import * as Font from 'expo-font'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { TodoList } from './Views/TodoList'
+import {
+  Dimensions,
+  KeyboardAvoidingView,
+  StyleSheet,
+  View,
+} from 'react-native'
+import { colors } from './Variables/colors'
+import { TodoList } from './Views/TodoList/TodoList'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import { useKeyboardHeight } from './Hooks/useKeyboardHeight'
 
 export const App = () => {
+  const { keyboardHeight } = useKeyboardHeight()
+
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <TodoList />
-    </View>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        height: Dimensions.get('window').height - keyboardHeight,
+      }}
+      enableAutomaticScroll={false}
+      enableOnAndroid={true}
+    >
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <TodoList />
+      </View>
+    </KeyboardAwareScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.darkCream,
     padding: 24,
+    paddingTop: 56,
   },
 })
 

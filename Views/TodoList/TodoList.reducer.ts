@@ -1,4 +1,4 @@
-import { ITodo } from '../App.types'
+import { ITodo } from './TodoList.types'
 
 export interface ITodoAppState {
   todos: ITodo[]
@@ -38,12 +38,14 @@ export const todosReducer = (state: ITodoAppState, action: TodoAction) => {
       }
     }
     case TodoActionEmum.EDIT: {
-      const updatedData = state.todos.map((x) =>
-        x.id === action.payload.id ? { ...x, text: action.payload.text } : x
+      const updatedTextOnTodoWithSelectedId = state.todos.map((todo) =>
+        todo.id === action.payload.id
+          ? { ...todo, text: action.payload.text }
+          : todo
       )
       return {
         ...state,
-        todos: updatedData,
+        todos: updatedTextOnTodoWithSelectedId,
       }
     }
     default: {

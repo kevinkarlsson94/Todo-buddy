@@ -1,13 +1,15 @@
 import React, { useContext } from 'react'
 import { ScrollView } from 'react-native'
-import { TodoAppContext } from '../../App.context'
+import { TodoListContext } from '../TodoList.context'
 import { TodoItem } from './TodoItem'
 
-export const TodoItemListContainer = () => {
-  const { todoAppState } = useContext(TodoAppContext)
+export const Container = () => {
+  const {
+    todoAppState: { todos },
+  } = useContext(TodoListContext)
   return (
     <ScrollView>
-      {todoAppState.todos.map((todo, index) => (
+      {todos.map((todo, index) => (
         <TodoItem index={index} todo={todo} key={index} />
       ))}
     </ScrollView>
