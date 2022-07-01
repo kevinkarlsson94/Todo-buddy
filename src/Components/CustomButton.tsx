@@ -16,12 +16,14 @@ export const CustomButton = ({
   accessibilityLabel,
   disabled,
   style,
+  testSelector = 'custom-button',
 }: {
   text: string
   onPress: () => void
   accessibilityLabel?: string
   disabled?: boolean
   style?: StyleProp<ViewStyle>
+  testSelector?: string
 }) => (
   <LinearGradient colors={[colors.pink, colors.purple]} style={styles.button}>
     <TouchableOpacity
@@ -29,6 +31,7 @@ export const CustomButton = ({
       accessibilityLabel={accessibilityLabel}
       disabled={disabled}
       style={style}
+      testID={testSelector}
     >
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundImage: `linear-gradient(180deg, ${colors.pink}, ${colors.purple})`,
   },
   buttonText: {
-    color: '#fff',
+    color: colors.white,
     fontWeight: 'bold',
     textTransform: 'uppercase',
     fontSize: 16,

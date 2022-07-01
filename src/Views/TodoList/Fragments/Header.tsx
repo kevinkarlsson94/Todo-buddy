@@ -2,7 +2,11 @@ import React from 'react'
 import { Text, StyleSheet } from 'react-native'
 import { colors } from '../../../Variables/colors'
 
-export const Header = () => <Text style={styles.header}>Kevins TODO list</Text>
+interface Props {
+  title: string
+}
+
+const Header = ({ title }: Props) => <Text style={styles.header}>{title}</Text>
 
 const styles = StyleSheet.create({
   header: {
@@ -12,3 +16,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 })
+
+export default Header

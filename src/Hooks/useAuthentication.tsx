@@ -1,36 +1,22 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as LocalAuthentication from 'expo-local-authentication'
-import { Text, View, StyleSheet } from 'react-native'
-import { colors } from '../Variables/colors'
-import CustomButton from '../Components/CustomButton'
 
 interface IUseAuthentication {
   isAuthenticated: boolean
-  isBiometricSupported: boolean
   onAuthenticate: () => void
 }
 
 /**
  * useAuthentication is a hook that handles the authenticated state of the app using expo-local-authentication
  * @param fileName
- * @returns isAuthenticated = if using is authenticated, LoginScreen = element that renders the login screen
+ * @returns isAuthenticated (indicates if user is authenticated or not), onAuthenticate (function that triggers the authentication)
  */
-export const useAuthentication = (): IUseAuthentication => {
-  const [isBiometricSupported, setBiometricSupported] = useState<boolean>(false)
+const useAuthentication = (): IUseAuthentication => {
   const [isAuthenticated, setisAuthenticated] = useState<boolean>(false)
-
-  useEffect(() => {
-    const isCompatible = async () => {
-      const compatible = await LocalAuthentication.hasHardwareAsync()
-      setBiometricSupported(compatible)
-    }
-    isCompatible()
-  }, [])
 
   const onAuthenticate = () => {
     const auth = LocalAuthentication.authenticateAsync({
-      promptMessage: 'Login with Touch-ID',
-      fallbackLabel: 'Enter PIN',
+      promptMessage: 'Login with PIN',
     })
     auth.then((result) => {
       setisAuthenticated(result.success)
@@ -39,7 +25,8 @@ export const useAuthentication = (): IUseAuthentication => {
 
   return {
     isAuthenticated,
-    isBiometricSupported,
     onAuthenticate,
   }
 }
+
+export default useAuthentication

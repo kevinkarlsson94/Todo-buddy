@@ -10,11 +10,16 @@ import { useKeyboardHeight } from '../../Hooks/useKeyboardHeight'
 import { colors } from '../../Variables/colors'
 
 export const TodoList = () => {
+  // I decided to use useReducer to keep and manage the state.
   const [todoAppState, dispatch] = useReducer(todosReducer, initialState)
+
+  // editingItem is used to check if current todo should be updated. If not a new todo is added.
+  // I decided to lift this state since it's used in 2 components and pass it to the TodoListContext to prevent prop-drilling
   const [editingItem, setEditingItem] = useState<ITodo | null>()
   const { keyboardHeight } = useKeyboardHeight()
 
   return (
+    // Since some state/functionalities have to be shared between components I decided to use the react context api for this.
     <TodoListContext.Provider
       value={{
         dispatch,
@@ -34,8 +39,7 @@ export const TodoList = () => {
       >
         <View style={styles.container}>
           <StatusBar style="auto" />
-
-          <Header />
+          <Header title="Todo app" />
           <Container />
           <AddUpdateTodo />
         </View>

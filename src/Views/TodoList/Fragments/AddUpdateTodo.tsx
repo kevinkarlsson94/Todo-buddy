@@ -5,7 +5,7 @@ import { TodoListContext } from '../TodoList.context'
 import { TodoActionEmum } from '../TodoList.reducer'
 import CustomButton from '../../../Components/CustomButton'
 
-export const AddUpdateTodo = () => {
+const AddUpdateTodo = () => {
   const [currentText, setCurrentText] = useState<string>('')
   const {
     todoAppState,
@@ -13,10 +13,14 @@ export const AddUpdateTodo = () => {
     editingItemGetterSetter: { getter: editingItem, setter: setEditingItem },
   } = useContext(TodoListContext)
 
+  // I don't want a user to add an empty todo item, so for simplicity I will just disable the todo button if text length is less than 1
+  // Optimally we would like some validation message to be shown in the input, but I decided to keep it simple for now
   const canAdd = currentText.length > 0
   const canEdit = editingItem && editingItem.text.length > 0
-  const canSubmit = !canAdd && !canEdit
+  const canSubmit = !canAdd && !canEdit // decides if can add/edit the todo
 
+  // checks the state if editingItem is defined or not (user clicked a todo and is editing)
+  // then executes the dispatch with edit or add depending on the state of editingItem
   const handleSubmit = () => {
     if (editingItem) {
       dispatch({
@@ -87,3 +91,5 @@ const styles = StyleSheet.create({
     opacity: 0.2,
   },
 })
+
+export default AddUpdateTodo

@@ -13,7 +13,12 @@ import { ITodo } from '../TodoList.types'
 import { FontAwesome5 } from '@expo/vector-icons'
 import useFadeIn from '../../../Hooks/useFadeIn'
 
-export const TodoItem = ({ index, todo }: { index: number; todo: ITodo }) => {
+interface Props {
+  index: number
+  todo: ITodo
+}
+
+const TodoItem = ({ index, todo }: Props) => {
   const { opacity } = useFadeIn()
 
   const { todoAppState, dispatch, editingItemGetterSetter } =
@@ -69,3 +74,5 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
 })
+
+export default TodoItem

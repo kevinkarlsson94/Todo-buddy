@@ -7,7 +7,7 @@ interface IProps {
   onAuthenticate: () => void
 }
 
-export const LoginScreen = ({ onAuthenticate }: IProps) => (
+const LoginScreen = ({ onAuthenticate }: IProps) => (
   <View style={styles.container}>
     <Text>Welcome to Todo-Buddy. Please login using the button below.</Text>
     <CustomButton
@@ -27,3 +27,5 @@ const styles = StyleSheet.create({
     padding: 40,
   },
 })
+
+export default LoginScreen

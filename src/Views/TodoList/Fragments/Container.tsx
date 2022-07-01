@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { ScrollView } from 'react-native'
 import { TodoListContext } from '../TodoList.context'
-import { TodoItem } from './TodoItem'
+import { TodoItem } from './index'
 
-export const Container = () => {
+const Container = () => {
   const {
     todoAppState: { todos },
   } = useContext(TodoListContext)
@@ -15,3 +15,5 @@ export const Container = () => {
     </ScrollView>
   )
 }
+
+export default Container

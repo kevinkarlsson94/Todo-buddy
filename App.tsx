@@ -1,10 +1,10 @@
 import React from 'react'
 import { TodoList } from './src/Views/TodoList/TodoList'
 
-import { useAuthentication } from './src/Hooks/useAuthentication'
-import { LoginScreen } from './src/Views/Login/LoginScreen'
+import useAuthentication from './src/Hooks/useAuthentication'
+import LoginScreen from './src/Views/Login/LoginScreen'
 
-export const App = () => {
+const App = () => {
   const { isAuthenticated, onAuthenticate } = useAuthentication()
 
   if (!isAuthenticated) {
