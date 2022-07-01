@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import {
   View,
   Text,
   StyleSheet,
   Animated,
-  Button,
   TouchableOpacity,
 } from 'react-native'
 import { colors } from '../../../Variables/colors'
@@ -12,7 +11,7 @@ import { TodoListContext } from '../TodoList.context'
 import { TodoActionEmum } from '../TodoList.reducer'
 import { ITodo } from '../TodoList.types'
 import { FontAwesome5 } from '@expo/vector-icons'
-import useFadeIn from '../Hooks/useFadeIn'
+import useFadeIn from '../../../Hooks/useFadeIn'
 
 export const TodoItem = ({ index, todo }: { index: number; todo: ITodo }) => {
   const { opacity } = useFadeIn()
