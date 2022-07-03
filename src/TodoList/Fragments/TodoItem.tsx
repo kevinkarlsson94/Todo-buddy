@@ -1,17 +1,16 @@
 import React, { useContext } from 'react'
 import {
-  View,
   Text,
   StyleSheet,
   Animated,
   TouchableOpacity,
+  View,
 } from 'react-native'
-import { colors } from '../../Variables/colors'
+import { colors, gutter } from '../../Variables/colors'
 import { TodoListContext } from '../TodoList.context'
 import { TodoActionEmum } from '../TodoList.reducer'
 import { ITodo } from '../TodoList.types'
 import { FontAwesome5 } from '@expo/vector-icons'
-import useFadeIn from '../../Hooks/useFadeIn'
 
 interface Props {
   index: number
@@ -19,17 +18,15 @@ interface Props {
 }
 
 const TodoItem = ({ index, todo }: Props) => {
-  const { opacity } = useFadeIn()
-
   const { todoAppState, dispatch, editingItemGetterSetter } =
     useContext(TodoListContext)
 
+  // dispatch to remove the todo from the list
   const onRemove = (todoIndex: number) => () => {
     dispatch({
       type: TodoActionEmum.REMOVE,
       payload: {
         id: todoIndex,
-        text: '',
       },
     })
     // if removing the item currently being edited, set the editing state to null
@@ -38,15 +35,56 @@ const TodoItem = ({ index, todo }: Props) => {
     }
   }
 
+  // if todo is checked, dispatch CHECK to update the todo accordingly
+  const onChecked = (todoIndex: number) => () =>
+    dispatch({
+      type: TodoActionEmum.CHECK,
+      payload: {
+        id: todoIndex,
+      },
+    })
+
+  const currentTodo = todoAppState.todos[index]
+
+  const CheckedIndicator = () => (
+    <TouchableOpacity
+      onPress={onChecked(index)}
+      style={{ marginRight: gutter(1), padding: 10 }}
+    >
+      {currentTodo.isChecked ? (
+        <FontAwesome5 name="check-circle" size={24} color={colors.pink} />
+      ) : (
+        <View
+          style={{
+            width: gutter(3),
+            height: gutter(3),
+            borderRadius: gutter(3),
+            backgroundColor: colors.pink,
+          }}
+        />
+      )}
+    </TouchableOpacity>
+  )
+
   return (
-    <Animated.View key={index} style={{ opacity: opacity }}>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => editingItemGetterSetter.setter(todo)}
-      >
-        <View style={styles.todoDot} />
-        <Text style={styles.todoText}>{todoAppState.todos[index].text}</Text>
-        <Text onPress={onRemove(todo.id)}>
+    <Animated.View key={index} testID="todo-item">
+      <TouchableOpacity style={styles.container}>
+        <CheckedIndicator />
+        <Text
+          style={[
+            styles.todoText,
+            {
+              textDecorationLine: currentTodo.isChecked
+                ? 'line-through'
+                : 'none',
+            },
+          ]}
+          onPress={() => editingItemGetterSetter.setter(todo)}
+          testID="todo-text"
+        >
+          {currentTodo.text}
+        </Text>
+        <Text onPress={onRemove(todo.id)} testID="remove-button">
           <FontAwesome5 name="trash-alt" size={24} color={colors.pink} />
         </Text>
       </TouchableOpacity>
@@ -59,23 +97,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    padding: gutter(2),
     backgroundColor: colors.cream,
     color: colors.white,
-    marginBottom: 8,
-    borderRadius: 24,
+    marginBottom: gutter(1),
+    borderRadius: gutter(3),
   },
   todoText: {
     color: colors.black,
     flex: 1,
     fontWeight: '700',
-  },
-  todoDot: {
-    width: 16,
-    height: 16,
-    borderRadius: 24,
-    marginRight: 8,
-    backgroundColor: colors.pink,
   },
 })
 

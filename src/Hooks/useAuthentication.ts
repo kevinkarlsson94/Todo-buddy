@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import * as LocalAuthentication from 'expo-local-authentication'
 
 interface IUseAuthentication {
@@ -15,6 +15,7 @@ const useAuthentication = (): IUseAuthentication => {
   // local state that indicates if user is authenticated or not
   const [isAuthenticated, setisAuthenticated] = useState<boolean>(false)
 
+  // function that runs the authentication
   const onAuthenticate = () => {
     const auth = LocalAuthentication.authenticateAsync({
       promptMessage: 'Login with PIN',

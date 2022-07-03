@@ -1,4 +1,5 @@
 export interface ITodo {
   id: number
-  text: string
+  text?: string
+  isChecked?: boolean
 }

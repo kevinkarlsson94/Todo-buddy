@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { colors } from '../Variables/colors'
 
+// I had to build a custom button using a styled TouchableOpacity since the button from React-Native does not give too much style alternatives
 export const CustomButton = ({
   text,
   onPress,

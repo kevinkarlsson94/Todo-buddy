@@ -6,3 +6,7 @@ export const colors = {
   white: '#fff',
   black: '#666565',
 }
+
+// keep every pixel in 8 pixels increments for aesthetics
+const gutterSize = 8
+export const gutter = (value: number) => value * gutterSize
