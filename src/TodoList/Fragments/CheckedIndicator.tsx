@@ -4,14 +4,14 @@ import { colors, gutter } from '../../Variables/colors'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 interface Props {
-  index: number
+  id: number
   onChecked: (todoIndex: number) => () => void
   isChecked?: boolean
 }
 
-const CheckedIndicator = ({ index, onChecked, isChecked }: Props) => (
+const CheckedIndicator = ({ id, onChecked, isChecked }: Props) => (
   <TouchableOpacity
-    onPress={onChecked(index)}
+    onPress={onChecked(id)}
     style={{ marginRight: gutter(1), padding: 10 }}
   >
     {isChecked ? (

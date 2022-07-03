@@ -51,7 +51,7 @@ const TodoItem = ({ index, todo }: Props) => {
     <Animated.View key={index} testID="todo-item">
       <TouchableOpacity style={styles.container}>
         <CheckedIndicator
-          index={index}
+          id={currentTodo.id}
           onChecked={onChecked}
           isChecked={currentTodo.isChecked}
         />

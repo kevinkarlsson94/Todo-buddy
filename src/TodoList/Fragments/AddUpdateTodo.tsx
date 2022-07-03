@@ -48,7 +48,7 @@ const AddUpdateTodo = () => {
     Keyboard.dismiss() // finally close keyboard when value is updated
   }
 
-  //
+  // updates the currentText if not editing, updates the editing value if editing
   const onUpdateTextValue = (value: string) => {
     editingItem
       ? setEditingItem({ ...editingItem, text: value })
