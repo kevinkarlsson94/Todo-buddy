@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 16,
     paddingHorizontal: 8,
-    backgroundImage: `linear-gradient(180deg, ${colors.pink}, ${colors.purple})`,
   },
   buttonText: {
     color: colors.white,

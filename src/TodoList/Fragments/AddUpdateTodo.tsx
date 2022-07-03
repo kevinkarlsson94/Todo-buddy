@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { View, TextInput, StyleSheet, Button } from 'react-native'
-import { colors } from '../../../Variables/colors'
+import { View, TextInput, StyleSheet, Keyboard } from 'react-native'
+import { colors } from '../../Variables/colors'
 import { TodoListContext } from '../TodoList.context'
 import { TodoActionEmum } from '../TodoList.reducer'
-import CustomButton from '../../../Components/CustomButton'
+import CustomButton from '../../Components/CustomButton'
 
 const AddUpdateTodo = () => {
-  const [currentText, setCurrentText] = useState<string>('')
+  const [currentText, setCurrentText] = useState<string>('') // state var used to keep the value of the current text being edited
   const {
     todoAppState,
     dispatch,
@@ -17,11 +17,12 @@ const AddUpdateTodo = () => {
   // Optimally we would like some validation message to be shown in the input, but I decided to keep it simple for now
   const canAdd = currentText.length > 0
   const canEdit = editingItem && editingItem.text.length > 0
-  const canSubmit = !canAdd && !canEdit // decides if can add/edit the todo
+  const canSubmit = canAdd || canEdit ? true : false // decides if can add/edit the todo
 
   // checks the state if editingItem is defined or not (user clicked a todo and is editing)
   // then executes the dispatch with edit or add depending on the state of editingItem
   const handleSubmit = () => {
+    // if item being edited
     if (editingItem) {
       dispatch({
         type: TodoActionEmum.EDIT,
@@ -32,6 +33,7 @@ const AddUpdateTodo = () => {
       })
       setEditingItem(null)
     } else {
+      // if new item
       dispatch({
         type: TodoActionEmum.ADD,
         payload: {
@@ -41,6 +43,7 @@ const AddUpdateTodo = () => {
       })
       setCurrentText('')
     }
+    Keyboard.dismiss() // finally close keyboard when value is updated
   }
 
   const onUpdateTextValue = (value: string) => {
@@ -54,18 +57,18 @@ const AddUpdateTodo = () => {
       <TextInput
         onChangeText={onUpdateTextValue}
         value={editingItem ? editingItem.text : currentText}
-        style={[styles.textInput]}
+        style={styles.textInput}
         placeholder="Add here..."
       />
 
       <CustomButton
-        text={editingItem ? 'Update TODO' : 'Add todo'}
+        text={editingItem ? 'Update todo' : 'Add todo'}
         onPress={handleSubmit}
         accessibilityLabel={
           editingItem ? 'Click here to add a todo' : 'Click here to update todo'
         }
-        disabled={canSubmit}
-        style={canSubmit && styles.errored}
+        disabled={!canSubmit}
+        style={!canSubmit && styles.errored}
       />
     </View>
   )

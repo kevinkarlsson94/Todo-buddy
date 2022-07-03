@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, StyleSheet } from 'react-native'
-import { colors } from '../../../Variables/colors'
+import { colors } from '../../Variables/colors'
 
 interface Props {
   title: string

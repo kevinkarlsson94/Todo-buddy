@@ -12,6 +12,7 @@ interface IUseAuthentication {
  * @returns isAuthenticated (indicates if user is authenticated or not), onAuthenticate (function that triggers the authentication)
  */
 const useAuthentication = (): IUseAuthentication => {
+  // local state that indicates if user is authenticated or not
   const [isAuthenticated, setisAuthenticated] = useState<boolean>(false)
 
   const onAuthenticate = () => {

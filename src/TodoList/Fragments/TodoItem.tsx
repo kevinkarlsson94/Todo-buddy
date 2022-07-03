@@ -6,12 +6,12 @@ import {
   Animated,
   TouchableOpacity,
 } from 'react-native'
-import { colors } from '../../../Variables/colors'
+import { colors } from '../../Variables/colors'
 import { TodoListContext } from '../TodoList.context'
 import { TodoActionEmum } from '../TodoList.reducer'
 import { ITodo } from '../TodoList.types'
 import { FontAwesome5 } from '@expo/vector-icons'
-import useFadeIn from '../../../Hooks/useFadeIn'
+import useFadeIn from '../../Hooks/useFadeIn'
 
 interface Props {
   index: number
@@ -32,6 +32,10 @@ const TodoItem = ({ index, todo }: Props) => {
         text: '',
       },
     })
+    // if removing the item currently being edited, set the editing state to null
+    if (todoIndex === editingItemGetterSetter.getter?.id) {
+      editingItemGetterSetter.setter(null)
+    }
   }
 
   return (
@@ -62,16 +66,16 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   todoText: {
-    color: '#000',
+    color: colors.black,
     flex: 1,
     fontWeight: '700',
   },
   todoDot: {
-    backgroundImage: `linear-gradient(180deg, ${colors.pink}, ${colors.purple})`,
     width: 16,
     height: 16,
     borderRadius: 24,
     marginRight: 8,
+    backgroundColor: colors.pink,
   },
 })
 
