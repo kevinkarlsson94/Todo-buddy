@@ -1,6 +1,11 @@
 # Todo App
 
-React-Native app using expo.
+React-Native app using expo. A webified build can be found here:\
+[Todo app](https://todobuddy-kevin.netlify.app/)
+
+## Prerequisites
+
+- An installed iOS/Android device. Can also be run using Expo app installed on a real device.
 
 ## The following scripts are available at your service:
 
