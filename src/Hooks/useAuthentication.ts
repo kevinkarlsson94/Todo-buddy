@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import * as LocalAuthentication from 'expo-local-authentication'
+import { Platform } from 'react-native'
 
 interface IUseAuthentication {
   isAuthenticated: boolean
@@ -17,12 +18,17 @@ const useAuthentication = (): IUseAuthentication => {
 
   // function that runs the authentication
   const onAuthenticate = () => {
-    const auth = LocalAuthentication.authenticateAsync({
-      promptMessage: 'Login with PIN',
-    })
-    auth.then((result) => {
-      setisAuthenticated(result.success)
-    })
+    // do not run authentication on the web as it is not supported
+    if (Platform.OS === 'web') {
+      setisAuthenticated(true)
+    } else {
+      const auth = LocalAuthentication.authenticateAsync({
+        promptMessage: 'Login with PIN',
+      })
+      auth.then((result) => {
+        setisAuthenticated(result.success)
+      })
+    }
   }
 
   return {

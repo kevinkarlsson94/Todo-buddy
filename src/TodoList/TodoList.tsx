@@ -47,7 +47,6 @@ export const TodoList = () => {
             {todoAppState.todos.map((todo, index) => (
               <TodoItem index={index} todo={todo} key={index} />
             ))}
-            <Text testID="korven">korven</Text>
           </ScrollView>
           <AddUpdateTodo />
         </View>
