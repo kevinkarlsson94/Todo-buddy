@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { TodoList } from './src/TodoList/TodoList'
 import useAuthentication from './src/Hooks/useAuthentication'
-import { Platform } from 'react-native'
 
 const App = () => {
   const { isAuthenticated, onAuthenticate } = useAuthentication()
