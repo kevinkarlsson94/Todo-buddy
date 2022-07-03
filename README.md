@@ -1,6 +1,6 @@
-### Todo App
+# Todo App
 
-React-Native app using expo. Notice that the app cannot be run in the web as expo-local-authentication does not support it.
+React-Native app using expo.
 
 ## The following scripts are available at your service:
 
