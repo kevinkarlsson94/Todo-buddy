@@ -7,6 +7,7 @@ import CustomButton from '../../Components/CustomButton'
 
 const AddUpdateTodo = () => {
   const [currentText, setCurrentText] = useState<string>('') // state var used to keep the value of the current text, is only used when adding new item
+
   const {
     todoAppState,
     dispatch,
@@ -31,7 +32,7 @@ const AddUpdateTodo = () => {
           text: editingItem.text,
         },
       })
-      setEditingItem(null)
+      setEditingItem(null) // reset editing item
     } else {
       // if new item
       dispatch({
@@ -39,13 +40,15 @@ const AddUpdateTodo = () => {
         payload: {
           id: todoAppState.todos.length,
           text: currentText,
+          isChecked: false,
         },
       })
-      setCurrentText('')
+      setCurrentText('') // reset text input
     }
     Keyboard.dismiss() // finally close keyboard when value is updated
   }
 
+  //
   const onUpdateTextValue = (value: string) => {
     editingItem
       ? setEditingItem({ ...editingItem, text: value })
@@ -53,14 +56,15 @@ const AddUpdateTodo = () => {
   }
 
   return (
-    <View style={{ marginTop: gutter(1) }}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.innerContainer}>
         <TextInput
           onChangeText={onUpdateTextValue}
           value={editingItem ? editingItem.text : currentText}
           style={styles.textInput}
           placeholder="Add here..."
           testID="text-input"
+          onSubmitEditing={handleSubmit}
         />
 
         <CustomButton
@@ -81,12 +85,17 @@ const AddUpdateTodo = () => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: gutter(1),
+    marginBottom: gutter(2),
+    padding: gutter(1),
+  },
+  innerContainer: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    padding: gutter(2),
     borderRadius: gutter(3),
     backgroundColor: colors.cream,
+    padding: gutter(2),
   },
   textInput: {
     width: '100%',
@@ -94,6 +103,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: gutter(1),
     flex: 1,
+    fontSize: 16,
+    marginRight: 8,
   },
   errored: {
     opacity: 0.4,

@@ -1,16 +1,11 @@
 import React, { useContext } from 'react'
-import {
-  Text,
-  StyleSheet,
-  Animated,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Text, StyleSheet, Animated, TouchableOpacity } from 'react-native'
 import { colors, gutter } from '../../Variables/colors'
 import { TodoListContext } from '../TodoList.context'
 import { TodoActionEmum } from '../TodoList.reducer'
 import { ITodo } from '../TodoList.types'
 import { FontAwesome5 } from '@expo/vector-icons'
+import CheckedIndicator from './CheckedIndicator'
 
 interface Props {
   index: number
@@ -20,6 +15,8 @@ interface Props {
 const TodoItem = ({ index, todo }: Props) => {
   const { todoAppState, dispatch, editingItemGetterSetter } =
     useContext(TodoListContext)
+
+  const currentTodo = todoAppState.todos[index] // gets todo of current index
 
   // dispatch to remove the todo from the list
   const onRemove = (todoIndex: number) => () => {
@@ -44,32 +41,20 @@ const TodoItem = ({ index, todo }: Props) => {
       },
     })
 
-  const currentTodo = todoAppState.todos[index]
-
-  const CheckedIndicator = () => (
-    <TouchableOpacity
-      onPress={onChecked(index)}
-      style={{ marginRight: gutter(1), padding: 10 }}
-    >
-      {currentTodo.isChecked ? (
-        <FontAwesome5 name="check-circle" size={24} color={colors.pink} />
-      ) : (
-        <View
-          style={{
-            width: gutter(3),
-            height: gutter(3),
-            borderRadius: gutter(3),
-            backgroundColor: colors.pink,
-          }}
-        />
-      )}
-    </TouchableOpacity>
-  )
+  // sets editing to off if already editing, else set editing item to current pressed item
+  const onEdit = (todo: ITodo) => () =>
+    editingItemGetterSetter.getter
+      ? editingItemGetterSetter.setter(null)
+      : editingItemGetterSetter.setter(todo)
 
   return (
     <Animated.View key={index} testID="todo-item">
       <TouchableOpacity style={styles.container}>
-        <CheckedIndicator />
+        <CheckedIndicator
+          index={index}
+          onChecked={onChecked}
+          isChecked={currentTodo.isChecked}
+        />
         <Text
           style={[
             styles.todoText,
@@ -79,12 +64,25 @@ const TodoItem = ({ index, todo }: Props) => {
                 : 'none',
             },
           ]}
-          onPress={() => editingItemGetterSetter.setter(todo)}
           testID="todo-text"
+          numberOfLines={1}
         >
           {currentTodo.text}
         </Text>
-        <Text onPress={onRemove(todo.id)} testID="remove-button">
+
+        <Text
+          onPress={onEdit(todo)} // sets the current todo as editing
+          testID="edit-button"
+          style={styles.editButton}
+        >
+          <FontAwesome5 name="edit" size={24} color={colors.pink} />
+        </Text>
+
+        <Text
+          onPress={onRemove(todo.id)}
+          testID="remove-button"
+          style={styles.removeButton}
+        >
           <FontAwesome5 name="trash-alt" size={24} color={colors.pink} />
         </Text>
       </TouchableOpacity>
@@ -106,7 +104,16 @@ const styles = StyleSheet.create({
   todoText: {
     color: colors.black,
     flex: 1,
-    fontWeight: '700',
+    fontWeight: '800',
+    fontSize: 18,
+  },
+  removeButton: {
+    padding: 16,
+    paddingLeft: 8,
+  },
+  editButton: {
+    padding: 16,
+    paddingRight: 8,
   },
 })
 

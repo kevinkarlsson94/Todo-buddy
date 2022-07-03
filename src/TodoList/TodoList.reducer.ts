@@ -10,9 +10,10 @@ export enum TodoActionEmum {
   EDIT = 'EDIT',
   CHECK = 'CHECK',
 }
+type TodoActionType = TodoActionEmum
 
 export interface TodoAction {
-  type: TodoActionEmum
+  type: TodoActionType
   payload: ITodo
 }
 

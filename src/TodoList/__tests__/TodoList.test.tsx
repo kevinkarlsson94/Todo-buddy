@@ -33,7 +33,7 @@ describe('TodoItem', () => {
   it('should edit First item', () => {
     const editedText = 'changed item'
     render(wrapWithMockedContext(<TodoList />))
-    fireEvent.press(screen.getAllByTestId('todo-text')[0])
+    fireEvent.press(screen.getAllByTestId('edit-button')[0])
     fireEvent.changeText(screen.getByTestId('text-input'), editedText)
     fireEvent.press(screen.getByTestId('custom-button'))
     expect(screen.getByText(editedText)).toBeTruthy()

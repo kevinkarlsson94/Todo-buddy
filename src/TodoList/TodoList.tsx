@@ -4,10 +4,9 @@ import { initialState, todosReducer } from './TodoList.reducer'
 import { Header, AddUpdateTodo, TodoItem } from './Fragments'
 import { ITodo } from './TodoList.types'
 import { Dimensions, View, StyleSheet, ScrollView, Text } from 'react-native'
-import { colors, gutter } from '../Variables/colors'
+import { colors } from '../Variables/colors'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useKeyboardHeight } from '../Hooks/useKeyboardHeight'
-
 export const TodoList = () => {
   // I decided to use useReducer to keep and manage the state.
   const [todoAppState, dispatch] = useReducer(todosReducer, initialState)
@@ -43,10 +42,11 @@ export const TodoList = () => {
         <View style={[styles.container, { height: windowHeight }]}>
           <Header title="TodoBuddie" />
           <ScrollView>
-            {/* Map all the todos in the state to list items */}
             {todoAppState.todos.map((todo, index) => (
               <TodoItem index={index} todo={todo} key={index} />
             ))}
+
+            {/* Map all the todos in the state to list items */}
           </ScrollView>
           <AddUpdateTodo />
         </View>
@@ -59,7 +59,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.darkCream,
-    padding: gutter(3),
-    paddingTop: gutter(8),
   },
 })
