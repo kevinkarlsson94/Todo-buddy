@@ -9,3 +9,8 @@ React-Native app using expo.
 - `yarn run ios` - Starts the app on Android simulator
 - `yarn run web` - Starts on the web (without authentication)
 - `yarn run test` - Runs all the unit tests
+
+### Future improvements ideas
+
+- Be able to save state when closing app, maybe filestream or sync-storage
+- Animations
